@@ -29,34 +29,34 @@ app.post("/", function (req, res) {
         ]
     };
 
-    const jsondata=JSON.stringify(data);
-    const url="https://us14.api.mailchimp.com/3.0/lists/44f01b3307"
+    const jsondata = JSON.stringify(data);
+    const url = "https://us14.api.mailchimp.com/3.0/lists/44f01b3307"
 
-    const options={
-        method:"POST",
-        auth:"utsav5:02b8596aa334cc11fcc73acb1b56a03d-us14"
+    const options = {
+        method: "POST",
+        auth: "utsav5:02b8596aa334cc11fcc73acb1b56a03d-us14"
     };
 
-   const request= https.request(url,options, function(response){
-        if(response.statusCode===200){
-            res.sendFile(__dirname+"/success.html");
+    const request = https.request(url, options, function (response) {
+        if (response.statusCode === 200) {
+            res.sendFile(__dirname + "/success.html");
         }
-        else{
-            res.sendFile(__dirname+"/failure.html");
+        else {
+            res.sendFile(__dirname + "/failure.html");
         }
-         response.on("data", function(data){
-             console.log(JSON.parse(data));
-         })
+        response.on("data", function (data) {
+            console.log(JSON.parse(data));
+        })
     })
     request.write(jsondata);
     request.end();
 
 });
-app.post("/failure", function(req,res){
+app.post("/failure", function (req, res) {
     res.redirect("/");
 })
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("Server is running on port 3000")
 })
 
